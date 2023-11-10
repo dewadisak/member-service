@@ -6,7 +6,7 @@ export class RegisterController {
   public router = express.Router();
 
   constructor() {
-    this.initializeServices(); 
+    this.initializeServices();
     this.intializeRoutes();
   }
 
@@ -15,14 +15,16 @@ export class RegisterController {
   }
 
   public intializeRoutes() {
-    this.router.get("/register", (req, res, next) => this.login(req, res, next));
+    this.router.post("/register", (req, res, next) => this.login(req, res, next));
   }
 
 
   public async login(request: express.Request, response: express.Response, next: express.NextFunction) {
     try {
-        const result = this.service.createAccount();
-        response.send(result);
+      const body = request.body;
+      const headers = request.headers;
+      const result = await this.service.createAccount(body, headers);
+      response.send(result);
     } catch (err) {
       console.error(err);
       response.status(500).send("Internal Server Error");

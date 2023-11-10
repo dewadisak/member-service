@@ -1,11 +1,11 @@
 import { Pool } from 'pg';
 
 const pool = new Pool({
-  host: 'dpg-cl5762c72pts739tfp60-a.oregon-postgres.render.com',
-  user: 'test_vv5q_user',
+  host: 'dpg-cl70ikph9grs73e9ac10-a.singapore-postgres.render.com',
+  user: 'members_develop_db_user',
   port: 5432,
-  password: '0e4aJJF7sAXJ4pHj3fyFUBbcSdRZ26CQ',
-  database: 'test_vv5q',
+  password: '6QhusS4rjDQUzFcICTFKwJ5iQSmzuqCe',
+  database: 'members_develop_db',
   ssl: true,
 });
 
