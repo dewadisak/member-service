@@ -1,14 +1,11 @@
 import cors from 'cors';
-import express, { Express, Request, Response } from 'express';
+import express, { Express } from 'express';
+import { RegisterController } from './register/register.controller.';
 const app: Express = express()
 app.use(express.json());
 app.use(cors())
-
-app.get('/', (req: Request, res: Response) => {
-  res.json({
-    message: 'Hello Express + TypeScirpt!!',
-  })
-})
+const registerController = new RegisterController;
+app.use(registerController.router);
 
 app.listen(3000, () => {
   console.log('Application started on port 3000!');
