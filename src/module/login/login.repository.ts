@@ -1,4 +1,4 @@
-import pool from "../database/pg-config";
+import pool from "../../database/pg-config";
 export class LoginRepository{
   public async getDocumentByEmail(email){
     try{

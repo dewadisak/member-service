@@ -1,5 +1,5 @@
 import express from "express";
-import { AuthenticationMiddleware } from "../middleware/authentication.service";
+import { AuthenticationMiddleware } from "../../middleware/authentication.service";
 import { LoginService } from "./login.service";
 export class LoginController {
   private service: LoginService;

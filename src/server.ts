@@ -1,7 +1,8 @@
 import cors from 'cors';
 import express, { Express } from 'express';
-import { LoginController } from './login/login.controller';
-import { RegisterController } from './register/register.controller.';
+import sequelize from './database/sql-pg-config';
+import { LoginController } from './module/login/login.controller';
+import { RegisterController } from './module/register/register.controller.';
 const app: Express = express()
 app.use(express.json());
 app.use(cors())
@@ -10,6 +11,12 @@ const loginController = new LoginController;
 app.use(registerController.router);
 app.use(loginController.router);
 
-app.listen(3000, () => {
+app.listen(3000, async () => {
+  try {
+    await sequelize.sync();
+    console.log('Connection has been established successfully.');
+  } catch (error) {
+    console.error('Unable to connect to the database:', error);
+  }
   console.log('Application started on port 3000!');
 });
