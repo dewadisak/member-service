@@ -52,11 +52,11 @@ export class RegisterRepository {
     }
   }
 
-  public async saveToken(token: string) {
+  public async saveToken(token: string, userId: string, email: string) {
     try{
       const query = {
-        text: 'UPDATE memberss SET token = $1',
-        values: [token],
+        text: 'UPDATE memberss SET token = $1 WHERE user_id = $2 AND email = $3;',
+        values: [token, userId, email],
       };
       const response = await pool.query(query);
       const result = response.rows;

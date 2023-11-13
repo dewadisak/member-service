@@ -3,19 +3,20 @@ import { response } from "express";
 import jwt from "jsonwebtoken";
 import { RegisterRepository } from "./register.repository";
 
-export class LoginService {
+export class RegisterService {
   public registerRepository: RegisterRepository;
 
   constructor() {
     this.registerRepository = new RegisterRepository();
   }
 
-  public async createAccount(body, headers) {
+  public async createAccount(body) {
     try {
       const findByEmail = await this.registerRepository.findEmail(body.email);
       if (findByEmail.length) {
         console.log("is Exist")
-        return response.status(401).send('Email Already Exist');
+        response.status(401).send('Email Already Exist');
+        return;
       }
       const decryptedPass = await bcrypt.hash(body.password, 10);
       const dataRegister = {
@@ -24,6 +25,7 @@ export class LoginService {
       }
       await this.registerRepository.create(dataRegister);
       const data = await this.registerRepository.getDocumentByEmail(body.email);
+      console.log('data', data)
       const token = jwt.sign(
         {
           user_id: data[0].user_id,
@@ -31,11 +33,11 @@ export class LoginService {
         },
         'qwertyuiop',
         {
-          expiresIn: '2h'
+          expiresIn: '10m'
         }
-      )
-      await this.registerRepository.saveToken(token);
-      return null;
+      );
+      await this.registerRepository.saveToken(token, data[0].user_id, data[0].email );
+      return { status: true, message: 'Register success'}
     } catch (err) {
       console.error(err);
 
