@@ -1,8 +1,8 @@
 import cors from 'cors';
 import express, { Express } from 'express';
 import sequelize from './database/sql-pg-config';
-import { LoginController } from './module/login/login.controller';
-import { RegisterController } from './module/register/register.controller.';
+import { LoginController } from './modules/login/login.controller';
+import { RegisterController } from './modules/register/register.controller.';
 const app: Express = express()
 app.use(express.json());
 app.use(cors())
