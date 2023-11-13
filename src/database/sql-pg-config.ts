@@ -9,4 +9,4 @@ const sequelize = new Sequelize('members_develop_db', 'members_develop_db_user',
   }
 });
 
-export default sequelize
+export default sequelize;

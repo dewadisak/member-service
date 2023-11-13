@@ -27,7 +27,6 @@ export class LoginController {
     } catch (err) {
       console.error(err);
     }
-
   }
 
   public async wellcome(request: express.Request, response: express.Response, next: express.NextFunction) {

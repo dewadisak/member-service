@@ -1,4 +1,5 @@
 import pool from "../../database/pg-config";
+import { User } from "../../database/shema/user.shema";
 export class LoginRepository{
   public async getDocumentByEmail(email){
     try{
@@ -29,4 +30,10 @@ export class LoginRepository{
       console.error(err)
     }
   }
+
+  public async testsql(body){
+    await User.create(body);
+  }
+
+
 }
