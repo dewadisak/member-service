@@ -11,6 +11,7 @@ export class RegisterService {
 
   public async createAccount(body) {
     try {
+      console.log("body", body);
       const findByEmail = await this.registerRepository.findByEmail(body.email);
       if (findByEmail) {
         console.log("is Exist")
@@ -20,7 +21,15 @@ export class RegisterService {
       const decryptedPass = await bcrypt.hash(body.password, 10);
       const dataRegister = {
         email: body.email.toLocaleLowerCase(),
-        password: decryptedPass
+        password: decryptedPass,
+        name: body.name,
+        lastName: body.lastName,
+        nickname: body.nickname,
+        phone: body.phone,
+        ip: body.ip,
+        role: body.role,
+        userStatus: body.userStatus,
+        brithDate: body.brithDate
       }
       const result = await this.registerRepository.create(dataRegister);
       if(result){

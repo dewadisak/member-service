@@ -28,7 +28,6 @@ export class LoginService {
             expiresIn: '1m'
           }
         );
-        // await this.loginRepository.saveToken(token);
         return { status: true, message: 'Login success', accessToken: token}
       }
       return { status: false, message: 'Login fail'}
