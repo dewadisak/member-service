@@ -15,20 +15,20 @@ export class LoginService {
         response.status(400).send('All in put is required');
       }
       const email = body.email.toLocaleLowerCase();
-      const data = await this.loginRepository.getDocumentByEmail(email);
-      const verify =  await bcrypt.compare(body.password, data[0].password);
+      const data = await this.loginRepository.findByEmail(email);
+      const verify =  await bcrypt.compare(body.password, data.password);
       if(data && verify){
         const token = jwt.sign(
           {
-            user_id: data[0].user_id,
-            email: data[0].email
+            id: data.id,
+            email: data.email
           },
           'qwertyuiop',
           {
             expiresIn: '1m'
           }
         );
-        await this.loginRepository.saveToken(token);
+        // await this.loginRepository.saveToken(token);
         return { status: true, message: 'Login success', accessToken: token}
       }
       return { status: false, message: 'Login fail'}
