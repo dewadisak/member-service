@@ -18,7 +18,6 @@ export const Affiliate = sequelize.define('affiliate', {
   affiliateCode: {
     type: DataTypes.UUID,
     defaultValue: Sequelize.UUIDV4,
-    primaryKey: true,
   },
 
 })

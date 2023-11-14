@@ -11,13 +11,13 @@ export class RegisterService {
 
   public async createAccount(body) {
     try {
-      console.log("body", body);
       const findByEmail = await this.registerRepository.findByEmail(body.email);
       if (findByEmail) {
         console.log("is Exist")
         response.status(401).send('Email Already Exist');
         return;
       }
+      const affiliateCode = body.affiliateCode;
       const decryptedPass = await bcrypt.hash(body.password, 10);
       const dataRegister = {
         email: body.email.toLocaleLowerCase(),
@@ -31,19 +31,34 @@ export class RegisterService {
         userStatus: body.userStatus,
         brithDate: body.brithDate
       }
-      const result = await this.registerRepository.create(dataRegister);
-      if(result){
-        return { status: true, message: 'Register success'}
+      const result = await this.registerRepository.createUser(dataRegister);
+      const resultAffiliate = await this.createAffiliate(result);
+      const resultReferral = await this.createReferral(resultAffiliate, result.role, affiliateCode);
+      if(result && resultAffiliate && resultReferral){
+        return { status: true, message: 'Register success'};
       }
     } catch (err) {
       console.error(err);
-
     }
-
   }
 
-  public generateUserId() {
-    const userId = 'SO1:M01:G01:C01'
+  public async createAffiliate(data) {
+    const dataAffiliate = {
+      userId: data.userId
+    };
+    return await this.registerRepository.createAffiliate(dataAffiliate);
+  }
+
+  public async createReferral(data, role, affiliateCode) {
+    const referredByUserId = await this.registerRepository.findUserIdByAffiliateCode(affiliateCode);
+    const dataReferral = {
+      affiliateId: data.affiliateId,
+      referredByUserId: referredByUserId
+    };
+    if(role === 'SENIOR'){
+      dataReferral.referredByUserId = '';
+    }
+    return await this.registerRepository.createReferral(dataReferral);
   }
 
 }
