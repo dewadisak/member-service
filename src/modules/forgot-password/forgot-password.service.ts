@@ -145,7 +145,7 @@ export class ForgotPasswordService {
                   การดูแลรักษาความปลอดภัยเป็นอย่างดี
                 </div>
                 <div class="font-style" style="margin-bottom: 12px;">ขอบคุณ</div>
-                <div class="font-style">จากทีมงาน MYORDER</div>
+                <div class="font-style">จากทีมงาน nanobot</div>
               </div>
             </div>
           </body>
