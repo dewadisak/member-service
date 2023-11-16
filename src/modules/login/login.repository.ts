@@ -11,5 +11,14 @@ export class LoginRepository{
     }
   }
 
+  public async updateUserStatus(userId: string) {
+    try {
+      const data = await User.update({ userStatus: "active"} ,{ where: { userId: userId }});
+
+    } catch (err) {
+      console.error(err)
+    }
+  }
+
 
 }

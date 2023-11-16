@@ -7,10 +7,7 @@ import jwt from "jsonwebtoken";
       return response.status(403).send('A token is required for authentication')
     }
     try {
-      console.log('de', token)
       const decoded = jwt.verify(token, 'qwertyuiop');
-      console.log('decoded', decoded)
-      request.body = decoded;
 
     } catch (err) {
       return response.status(401).send("Invalid Token");
