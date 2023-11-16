@@ -56,7 +56,7 @@ export class LoginService {
     });
 
     transporter.sendMail({
-      from: "nanobot.th@gamil.com",
+      from: "nanobot.th@gmail.com",
       to: "adisak.timtim@gmail.com",
       subject: "Message",
       html: `
