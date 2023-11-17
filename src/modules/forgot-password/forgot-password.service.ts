@@ -1,4 +1,5 @@
 import bcrypt from "bcrypt";
+import 'dotenv/config';
 import jwt from "jsonwebtoken";
 import nodemailer from 'nodemailer';
 import { ForgotPasswordRepository } from "./forgot-password.repository";
@@ -23,7 +24,7 @@ export class ForgotPasswordService {
         id: data.userId,
         email: data.email
       },
-      'qwertyuiop',
+      process.env.JWT_KEY,
       {
         expiresIn: '5m'
       }
@@ -38,8 +39,8 @@ export class ForgotPasswordService {
       host: "smtp-relay.brevo.com",
       port: 587,
       auth: {
-        user: 'nanobot.th@gmail.com',
-        pass: '2sBZFwtUYIKrfvWE'
+        user: process.env.EMAIL_NM,
+        pass: process.env.PASSWORD_NM
       }
     });
     transporter.sendMail({

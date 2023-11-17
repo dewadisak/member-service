@@ -1,6 +1,7 @@
+import 'dotenv/config';
 import { Sequelize } from 'sequelize';
-const sequelize = new Sequelize('members_develop_db', 'members_develop_db_user', '6QhusS4rjDQUzFcICTFKwJ5iQSmzuqCe', {
-  host: 'dpg-cl70ikph9grs73e9ac10-a.singapore-postgres.render.com',
+const sequelize = new Sequelize(process.env.PG_DATABASE, process.env.PG_USERNAME, process.env.PG_PASSWORD, {
+  host: process.env.PG_HOST,
   dialect: 'postgres',
   dialectOptions: {
     ssl: {

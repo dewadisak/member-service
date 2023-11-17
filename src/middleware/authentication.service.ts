@@ -1,3 +1,4 @@
+import 'dotenv/config';
 import express from "express";
 import jwt from "jsonwebtoken";
 
@@ -7,7 +8,7 @@ import jwt from "jsonwebtoken";
       return response.status(403).send('A token is required for authentication')
     }
     try {
-      const decoded = jwt.verify(token, 'qwertyuiop');
+      const decoded = jwt.verify(token, process.env.JWT_KEY);
 
     } catch (err) {
       return response.status(401).send("Invalid Token");

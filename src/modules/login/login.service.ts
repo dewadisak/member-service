@@ -1,8 +1,10 @@
 import bcrypt from "bcrypt";
+import 'dotenv/config';
 import { response } from "express";
 import jwt from "jsonwebtoken";
 import nodemailer from 'nodemailer';
 import { LoginRepository } from "./login.repository";
+
 export class LoginService {
   public loginRepository: LoginRepository;
   constructor() {
@@ -27,12 +29,11 @@ export class LoginService {
               id: data.userId,
               email: data.email
             },
-            'qwertyuiop',
+            process.env.JWT_KEY,
             {
               expiresIn: '10m'
             }
           );
-          console.log(token)
           return { status: true, message: 'Login success', accessToken: token };
         }
       }
@@ -50,8 +51,8 @@ export class LoginService {
       host: "smtp-relay.brevo.com",
       port: 587,
       auth: {
-        user: 'nanobot.th@gmail.com',
-        pass: '2sBZFwtUYIKrfvWE'
+        user: process.env.EMAIL_NM,
+        pass: process.env.PASSWORD_NM
       }
     });
 
