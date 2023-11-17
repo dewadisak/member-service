@@ -4,7 +4,9 @@ import { LoginService } from "./login.service";
 export class LoginController {
   private service: LoginService;
   public router = express.Router();
+  path: string;
   constructor() {
+    this.initializeConfigs();
     this.initializeServices();
     this.intializeRoutes();
   }
@@ -12,6 +14,10 @@ export class LoginController {
   public initializeServices() {
     this.service = new LoginService();
   }
+  public initializeConfigs() {
+    this.path = 'auth';
+  }
+
 
   public intializeRoutes() {
     this.router.post("/login", (req, res, next) => this.login(req, res, next));

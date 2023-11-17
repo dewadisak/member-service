@@ -4,10 +4,16 @@ import { RegisterService } from "./register.service";
 export class RegisterController {
   private service: RegisterService;
   public router = express.Router();
+  path: string;
 
   constructor() {
+    this.initializeConfigs();
     this.initializeServices();
     this.intializeRoutes();
+  }
+
+  public initializeConfigs() {
+    this.path = 'auth';
   }
 
   public initializeServices() {

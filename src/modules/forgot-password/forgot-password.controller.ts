@@ -3,11 +3,18 @@ import { AuthenticationMiddleware } from "../../middleware/authentication.servic
 import { ForgotPasswordService } from "./forgot-password.service";
 export class ForgotPasswordController {
   private service: ForgotPasswordService;
+  path: string;
   public router = express.Router();
   constructor() {
+    this.initializeConfigs();
     this.initializeServices();
     this.intializeRoutes();
   }
+
+  public initializeConfigs() {
+    this.path = 'forgot-password';
+  }
+
 
   public initializeServices() {
     this.service = new ForgotPasswordService();
