@@ -21,7 +21,7 @@ export class ForgotPasswordService {
     const data = await this.forgotPasswordRepository.findByEmail(email);
     const token = jwt.sign(
       {
-        id: data.userId,
+        id: data.id,
         email: data.email
       },
       process.env.JWT_KEY,

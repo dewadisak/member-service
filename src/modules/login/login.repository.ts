@@ -11,9 +11,9 @@ export class LoginRepository{
     }
   }
 
-  public async updateUserStatus(userId: string) {
+  public async updateUserStatus(id: string) {
     try {
-      const data = await User.update({ userStatus: "active"} ,{ where: { userId: userId }});
+      const data = await User.update({ userStatus: "active"} ,{ where: { id: id }});
 
     } catch (err) {
       console.error(err)

@@ -5,7 +5,8 @@ import sequelize from '../sql-pg-config';
 
 
 export interface UserModel extends Sequelize.Model<UserModel> {
-  userId: string
+  id: string
+  memberId: string
   email: string
   password: string
   name: string
@@ -21,16 +22,18 @@ export interface UserModel extends Sequelize.Model<UserModel> {
 }
 
 export const User = sequelize.define('user', {
-  userId: {
+  id: {
     type: DataTypes.UUID,
     defaultValue: Sequelize.UUIDV4,
     primaryKey: true,
   },
+  memberId: Sequelize.STRING,
+  referralId: Sequelize.STRING,
   email: Sequelize.STRING,
   password: Sequelize.STRING,
   name: Sequelize.STRING,
-  lastName: Sequelize.STRING,
   nickname: Sequelize.STRING,
+  lastName: Sequelize.STRING,
   phone: Sequelize.STRING,
   ip: Sequelize.STRING,
   role: Sequelize.STRING,

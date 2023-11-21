@@ -17,9 +17,12 @@ export class RegisterService {
         response.status(401).send('Email Already Exist');
         return;
       }
-      const affiliateCode = body.affiliateCode;
+      const member = await this.generateMember(body.role, body.referralId);
+      // const affiliateCode = body.affiliateCode;
       const decryptedPass = await bcrypt.hash(body.password, 10);
       const dataRegister = {
+        memberId: member.memberId,
+        referralId: member.referralId,
         email: body.email.toLocaleLowerCase(),
         password: decryptedPass,
         name: body.name,
@@ -32,9 +35,9 @@ export class RegisterService {
         brithDate: body.brithDate
       }
       const result = await this.registerRepository.createUser(dataRegister);
-      const resultAffiliate = await this.createAffiliate(result);
-      const resultReferral = await this.createReferral(resultAffiliate, result.role, affiliateCode);
-      if(result && resultAffiliate && resultReferral){
+      // const resultAffiliate = await this.createAffiliate(result);
+      // const resultReferral = await this.createReferral(resultAffiliate, result.role, affiliateCode);
+      if(result){
         return { status: true, message: 'Register success'};
       }
     } catch (err) {
@@ -44,7 +47,7 @@ export class RegisterService {
 
   public async createAffiliate(data) {
     const dataAffiliate = {
-      userId: data.userId
+      memberId: data.userId
     };
     return await this.registerRepository.createAffiliate(dataAffiliate);
   }
@@ -61,4 +64,37 @@ export class RegisterService {
     return await this.registerRepository.createReferral(dataReferral);
   }
 
+  public async generateMember(role, referralId){
+    const members = await this.registerRepository.getCountMemberId(role, referralId);
+    const memberCount = members.length + 1;
+    let member = {
+      memberId: '',
+      referralId: ''
+    };
+    if(role === 'SENIOR'){
+      const membersSenior = await this.registerRepository.getCountMemberIdForSenior(role);
+      const membersSeniorCount = membersSenior.length + 1;
+      member.memberId = `S0000${membersSeniorCount}`;
+      member.referralId = member.memberId;
+    }
+    if(role === 'MASTER'){
+      member.memberId = `${referralId}:M0000${memberCount}`;
+      member.referralId = `${referralId}`;
+    }
+    if(role === 'AGENT'){
+      member.memberId = `${referralId}:G0000${memberCount}`;
+      member.referralId = `${referralId}`;
+    }
+    if(role === 'CUSTOMER'){
+      member.memberId = `${referralId}:C0000${memberCount}`;
+      member.referralId = `${referralId}`;
+    }
+    if(role === 'ADMIN'){
+      member.memberId = `${referralId}:A0000${memberCount}`;
+      member.referralId = `${referralId}`;
+    }
+    console.log("memberId😈", member.memberId)
+
+    return member;
+  }
 }

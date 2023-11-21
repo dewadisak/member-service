@@ -3,7 +3,7 @@ import express, { Express } from 'express';
 import sequelize from './database/sql-pg-config';
 import { ForgotPasswordController } from './modules/forgot-password/forgot-password.controller';
 import { LoginController } from './modules/login/login.controller';
-import { RegisterController } from './modules/register/register.controller.';
+import { RegisterController } from './modules/register/register.controller';
 const app: Express = express()
 app.use(express.json());
 app.use(cors())

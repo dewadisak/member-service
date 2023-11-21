@@ -19,14 +19,14 @@ export class LoginService {
       const data = await this.loginRepository.findByEmail(email);
       const verify = await bcrypt.compare(body.password, data.password);
       if (data.userStatus === 'pending') {
-        this.verifyEmail(data.userId);
+        this.verifyEmail(data.id, data.email);
         return { status: false, message: 'Please verify email' };
 
       } else {
         if (data && verify) {
           const token = jwt.sign(
             {
-              id: data.userId,
+              id: data.id,
               email: data.email
             },
             process.env.JWT_KEY,
@@ -45,8 +45,9 @@ export class LoginService {
     }
   }
 
-  public verifyEmail(userId) {
-    const urlLink = `http://localhost:3000/verify/${userId}`;
+  public verifyEmail(id, email) {
+    console.log('😊')
+    const urlLink = `http://localhost:3000/verify/${id}`;
     let transporter = nodemailer.createTransport({
       host: "smtp-relay.brevo.com",
       port: 587,
@@ -58,8 +59,8 @@ export class LoginService {
 
     transporter.sendMail({
       from: "nanobot.th@gmail.com",
-      to: "adisak.timtim@gmail.com",
-      subject: "Message",
+      to: email,
+      subject: "ยืนยันการสมัคร",
       html: `
       <!DOCTYPE html>
         <html lang="en">

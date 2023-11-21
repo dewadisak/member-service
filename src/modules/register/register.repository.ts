@@ -67,4 +67,18 @@ export class RegisterRepository {
     }
   }
 
+  public async getCountMemberId(role, referralId){
+    const data = await User.findAll({ where: { role: role, referralId: referralId }});
+    const memberCount = data;
+    return memberCount;
+    
+  }
+
+  public async getCountMemberIdForSenior(role){
+    const data = await User.findAll({ where: { role: role }});
+    const memberCount = data;
+    return memberCount;
+    
+  }
+
 }
